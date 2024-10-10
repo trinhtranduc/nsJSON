@@ -326,6 +326,9 @@ void JSON_Delete(struct JSON_NODE** ppNode, struct JSON_NODE* pPrev)
 			if (pNext == *ppNode)
 				*ppNode = NULL;
 
+			if (pPrev)
+				break;
+
 			pNext = pNextNext;
 		}
 	}
