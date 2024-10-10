@@ -1,0 +1,15 @@
+Contrib/nsJSON/Release/*
+Contrib/nsJSON/Release Unicode/*
+
+Contrib/nsJSON/Debug/*
+Contrib/nsJSON/Debug Unicode/*
+
+Contrib/nsJSON/ConsoleAppDotNet/obj/*
+
+Contrib/nsJSON/x64/*
+Contrib/nsJSON/ConsoleApp/x64/*
+Contrib/nsJSON/ConsoleAppDotNet/x64/*
+
+Plugins/*
+
+*.vcxproj.user

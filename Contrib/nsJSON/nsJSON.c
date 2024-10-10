@@ -1,6 +1,6 @@
 /*
 	nsJSON NSIS plug-in by Stuart Welch <afrowuk@afrowsoft.co.uk>
-	v1.1.1.0 - 21st November 2017
+	v1.1.1.1 - 10th October 2024
 */
 
 #include <windows.h>
