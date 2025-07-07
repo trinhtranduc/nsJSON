@@ -160,6 +160,43 @@ Section /o `Generate Example6.json` EXAMPLE6
 
 SectionEnd
 
+Section /o `Reading from Example6.json` EXAMPLE17
+   
+  nsJSON::Set /file $EXEDIR\Input\Example6.json
+  ; Try to read specific keys after seeing the structure
+  ClearErrors
+  nsJSON::Get `data` `user` `id` /end
+  ${IfNot} ${Errors}
+    Pop $R1
+    DetailPrint `User ID = $R1`
+  ${Else}
+    DetailPrint `Error reading User ID`
+  ${EndIf}
+
+  ; Try reading JWT
+  ClearErrors
+  nsJSON::Get `data` `jwt` /end
+  ${IfNot} ${Errors}
+    Pop $R2
+    DetailPrint `JWT Token = $R2`
+  ${Else}
+    DetailPrint `Error reading JWT Token`
+  ${EndIf}
+
+  ; Try reading Korean fullName
+  ClearErrors
+  nsJSON::Get `data` `user` `fullName` /end
+  ${IfNot} ${Errors}
+    Pop $R3
+    DetailPrint `Korean Full Name = $R3`
+  ${Else}
+    DetailPrint `Error reading Korean Full Name`
+  ${EndIf}
+  
+  end_section:
+    DetailPrint `EXAMPLE17 completed`
+SectionEnd
+
 Section /o `Reading from Example1.json` EXAMPLE7
 
   nsJSON::Set /file $EXEDIR\Input\Example1.json
@@ -483,8 +520,10 @@ LangString Example13Desc ${LANG_ENGLISH} `Parses Example2.json (size>NSIS_MAX_ST
 LangString Example14Desc ${LANG_ENGLISH} `Simple Get function tests.`
 LangString Example15Desc ${LANG_ENGLISH} `Simple Delete function tests.`
 LangString Example16Desc ${LANG_ENGLISH} `Empty/missing value keys tests.`
+LangString Example17Desc ${LANG_ENGLISH} `Parses Example17.json and then reads values from the tree using Get`
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${EXAMPLE17} $(Example17Desc)
   !insertmacro MUI_DESCRIPTION_TEXT ${EXAMPLE1} $(Example1Desc)
   !insertmacro MUI_DESCRIPTION_TEXT ${EXAMPLE1B} $(Example1BDesc)
   !insertmacro MUI_DESCRIPTION_TEXT ${EXAMPLE1C} $(Example1CDesc)
@@ -496,7 +535,6 @@ LangString Example16Desc ${LANG_ENGLISH} `Empty/missing value keys tests.`
   !insertmacro MUI_DESCRIPTION_TEXT ${EXAMPLE5} $(Example5Desc)
   !insertmacro MUI_DESCRIPTION_TEXT ${EXAMPLE5B} $(Example5BDesc)
   !insertmacro MUI_DESCRIPTION_TEXT ${EXAMPLE6} $(Example6Desc)
-  !insertmacro MUI_DESCRIPTION_TEXT ${EXAMPLE7} $(Example7Desc)
   !insertmacro MUI_DESCRIPTION_TEXT ${EXAMPLE8} $(Example8Desc)
   !insertmacro MUI_DESCRIPTION_TEXT ${EXAMPLE9} $(Example9Desc)
   !insertmacro MUI_DESCRIPTION_TEXT ${EXAMPLE10} $(Example10Desc)

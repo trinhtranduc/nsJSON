@@ -1425,23 +1425,36 @@ PCHAR JSON_FromUnicode(PWCHAR pwszText, int* pcchText, UINT nCodePage)
 
 PWCHAR JSON_ToUnicode(PCHAR pszText, int* pcbText)
 {
-	int cchConverted = MultiByteToWideChar(CP_ACP, MB_COMPOSITE, pszText, *pcbText, NULL, 0);
-	if (cchConverted > 0)
-	{
-		PWCHAR pwszBuffer = (PWCHAR)GlobalAlloc(GPTR, sizeof(WCHAR) * (cchConverted + 1));
-		if (pwszBuffer)
-		{
-			if (MultiByteToWideChar(CP_ACP, MB_COMPOSITE, pszText, *pcbText, pwszBuffer, cchConverted) > 0)
-			{
-				*pcbText = cchConverted;
-				return pwszBuffer;
-			}
+    int cchConverted = 0;
+    PWCHAR pwszBuffer = NULL;
 
-			GlobalFree(pwszBuffer);
-		}
-	}
+  	// UTF-8로 변환 시도
+    cchConverted = MultiByteToWideChar(CP_UTF8, 0, pszText, *pcbText, NULL, 0);
+    if (cchConverted > 0) {
+        pwszBuffer = (PWCHAR)GlobalAlloc(GPTR, sizeof(WCHAR) * (cchConverted + 1));
+        if (pwszBuffer) {
+            if (MultiByteToWideChar(CP_UTF8, 0, pszText, *pcbText, pwszBuffer, cchConverted) > 0) {
+                *pcbText = cchConverted;
+                return pwszBuffer;
+            }
+            GlobalFree(pwszBuffer);
+        }
+    } else {
+        // 실패 시 CP_ACP로 재시도 (기존 방식)
+        cchConverted = MultiByteToWideChar(CP_ACP, MB_COMPOSITE, pszText, *pcbText, NULL, 0);
+        if (cchConverted > 0) {
+            pwszBuffer = (PWCHAR)GlobalAlloc(GPTR, sizeof(WCHAR) * (cchConverted + 1));
+            if (pwszBuffer) {
+                if (MultiByteToWideChar(CP_ACP, MB_COMPOSITE, pszText, *pcbText, pwszBuffer, cchConverted) > 0) {
+                    *pcbText = cchConverted;
+                    return pwszBuffer;
+                }
+                GlobalFree(pwszBuffer);
+            }
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
 
 static BOOL _Sort(enum JSON_SORT_FLAGS eFlags, struct JSON_NODE* pCurrent, struct JSON_NODE* pNext)

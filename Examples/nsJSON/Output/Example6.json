@@ -1,0 +1,24 @@
+{
+	"html": {
+		"head": {
+			"title": "Example6"
+		},
+		"body": {
+			"h1": [
+				true,
+				"hello",
+				false
+			],
+			"h2": [
+				"I like",
+				{
+					"u": {
+						"i": "programming"
+					}
+				},
+				"very much!"
+			],
+			"a href=\"http://www.afrowsoft.co.uk\"": "My website!"
+		}
+	}
+}
